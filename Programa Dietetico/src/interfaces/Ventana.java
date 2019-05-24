@@ -1,5 +1,7 @@
 package interfaces;
 import java.awt.Image;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.net.URL;
 import java.sql.Connection;
 import java.util.HashMap;
@@ -14,6 +16,7 @@ import principal.Plato;
 
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 
 public class Ventana extends JFrame{
 
@@ -28,6 +31,7 @@ public class Ventana extends JFrame{
 	private TuDieta tuDieta;
 	private Plato plato;
 	private Connection con;
+	private Ventana thisRef;
 	private  final HashMap<String,HashMap<Integer,Plato>> todosLosPlatos;
 	
 	
@@ -96,6 +100,19 @@ public class Ventana extends JFrame{
 		setLocationRelativeTo(null);
 		setIconImage(new ImageIcon(getClass().getResource("/interfaces/icono.JPG")).getImage());
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		//ESTO ES PARA CERRAR EL PROGRAMA
+				addWindowListener(new WindowAdapter() {
+					@Override
+					public void windowClosing(WindowEvent arg0) {
+						int opcionElegida = JOptionPane.showConfirmDialog(thisRef, "¡ Si te quedas, te puedes comer un brownie !", "¿Seguro que quieres salir?", JOptionPane.YES_NO_OPTION);
+						
+						if (opcionElegida ==2) {
+							System.exit(0);
+							
+						}
+					}
+				}
+				);
 		
 		this.setVisible(true);
 	

@@ -140,7 +140,7 @@ public class Registro extends JPanel{
 			                
 			                try {
 			                	ventana.setUsuario(new Usuario(nombre, pass,altura, edad));
-								ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.1.68:3306/programanutricion","dietista","dietista"));
+								ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.1.21:3306/programanutricion","dietista","dietista"));
 								//usamos
 								PreparedStatement smt =
 								ventana.getCon().prepareStatement("insert into datos_usuario1 values(?,?,?,?)");
@@ -160,8 +160,8 @@ public class Registro extends JPanel{
 							} catch (SQLException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
-							}catch (ContraseñaException e2) {
-								 JOptionPane.showMessageDialog(ventana, "La contraseña debe tener al menos 8 caracteres", "Password incorrecto", JOptionPane.ERROR_MESSAGE);
+							}/*catch (ContraseñaException e2) {
+								 //JOptionPane.showMessageDialog(ventana, "La contraseña debe tener al menos 8 caracteres", "Password incorrecto", JOptionPane.ERROR_MESSAGE);
 									//e2.printStackTrace();
 							}catch(NombreException e3) {
 								JOptionPane.showMessageDialog(ventana, "El nombre debe tener al menos 8 caracteres", "Nombre incorrecto", JOptionPane.ERROR_MESSAGE);
@@ -173,6 +173,8 @@ public class Registro extends JPanel{
 								JOptionPane.showMessageDialog(ventana, "La edad es incorrecta", "Edad incorrecta", JOptionPane.ERROR_MESSAGE);
 								//e5.printStackTrace();
 							}
+							*/
+							
 			        }
 			        }
 

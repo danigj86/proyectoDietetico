@@ -74,30 +74,62 @@ public class Login extends JPanel {
 				String contrasenia = String.copyValueOf(campoContrasenia.getPassword());
 				
 				try {
-					ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.0.15:3306/programanutricion","dietista","dietista"));//CONECTAMOS A LA BASE DE DATOS
+					ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.1.21:3306/programanutricion","dietista","dietista"));//CONECTAMOS A LA BASE DE DATOS
 					
 					//AHORA USAMOS LA BASE DE DATOS
 					
-					Statement smt = ventana.getCon().createStatement(); 
+					Statement smt = ventana.getCon().createStatement(); //smt para los datos del usuario
+					Statement smt2=ventana.getCon().createStatement();  //smt para calorias mantener 
+					Statement smt3=ventana.getCon().createStatement();  //smt para calorias perder 
+					Statement smt4=ventana.getCon().createStatement();  //smt para calorias ganar
 					
+					//ESTE CODIGO ES PARA LLAMAR A LOS DATOS DE LA TABLA DATOS_USUARIOS1
 					ResultSet rs = smt.executeQuery("select * from datos_usuario1 where usuario ='"+usuario+"' and pass = '"+contrasenia+"'");//AQUI SOLO PONEMOS LOS CAMPOS QUE ESTAMOS BUSCANDO PARA HACER LOGIN
-					//ResultSet rs2 = smt.executeQuery("select * from calorias where nombre ='"+ventana.getUsuario().getNombre()+"', c_mantener ='"+ventana.getUsuario().getCaloriasMantener()+"', c_perder = '"+ventana.getUsuario().getCaloriasPerder()+"' and c_ganar = '"+ventana.getUsuario().getCaloriasGanar()+"'");
 					if (rs.next()) {
 						//AQUI PONEMOS EL RESTO DE CAMPOS
 						int altura = rs.getInt("altura");
 						int edad = rs.getInt("edad");
 						
 						ventana.setUsuario(new Usuario(usuario, contrasenia, altura, edad));
-						//ventana.setUsuario(new Usuario (ventana.getUsuario().getNombre(), ventana.getUsuario().getCaloriasMantener(),ventana.getUsuario().getCaloriasPerder(), ventana.getUsuario().getCaloriasGanar()));
-						ventana.irAPerfil();
+				   		
+					//ESTE CODIGO ES PARA QUE APAREZCAN CALORIAS MANTENER, YA QUE ESTAN GUARDADAS EN OTRA TABLA	
+					ResultSet rs2 = smt2.executeQuery("select * from calorias where nombre ='"+ventana.getUsuario().getNombre()+"'");
+					System.out.println("select * from calorias where nombre ='"+ventana.getUsuario().getNombre()+"'");
+					if(rs2.next()) {
 						
+						ventana.getUsuario().setCaloriasMantener(rs2.getFloat("c_mantener"));
+						
+					   }
+					
+					//ESTE PARA CALORIAS PERDER
+					 ResultSet rs3 = smt3.executeQuery("select * from calorias where nombre ='"+ventana.getUsuario().getNombre()+"'");
+					   System.out.println("select * from calorias where nombre ='"+ventana.getUsuario().getNombre()+"'");
+					   if(rs3.next()) {
+								
+						ventana.getUsuario().setCaloriasPerder(rs3.getFloat("c_perder"));
+									
+						}
+					//ESTE PARA CALORIAS GANAR   
+				   ResultSet rs4 = smt4.executeQuery("select * from calorias where nombre ='"+ventana.getUsuario().getNombre()+"'");
+				   System.out.println("select * from calorias where nombre ='"+ventana.getUsuario().getNombre()+"'");
+				   if(rs3.next()) {
+							
+					   ventana.getUsuario().setCaloriasGanar(rs4.getFloat("ganar"));
+							
+						}  
+						
+						else {
+							System.err.println("Esto no deberia pasar nunca! se encontró usuario y no calorías");
+						}
+						ventana.irAPerfil();
 					}else {
 						JOptionPane.showMessageDialog(ventana, "Contraseña incorrecta","Contraseña incorrecta", JOptionPane.ERROR_MESSAGE);
 					}
+		
 					ventana.getCon().close();
 					
 				} catch (SQLException ex) {
-					JOptionPane.showMessageDialog(ventana, "Conexion fallida","Conexión incorrecta", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(ventana, "Usuario no encontrado","Usuario no encontrado", JOptionPane.ERROR_MESSAGE);
 					ex.printStackTrace();
 				} /*catch (ContraseñaCortaException e) {
 					// TODO Auto-generated catch block

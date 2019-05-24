@@ -65,25 +65,26 @@ public class Perfil extends JPanel {
 		lblGanarPeso.setBounds(38, 279, 103, 14);
 		add(lblGanarPeso);
 		
-		JLabel cMantener = new JLabel(String.valueOf(ventana.getUsuario().getCaloriasMantener()));
+		System.out.println("en perfil:"+ventana.getUsuario().getCaloriasMantener());
+		JLabel cMantener = new JLabel(ventana.getUsuario().getCaloriasMantener()+"");
 		cMantener.setForeground(Color.WHITE);
 		cMantener.setFont(new Font("Tahoma", Font.BOLD, 11));
 		cMantener.setBounds(152, 197, 144, 14);
 		add(cMantener);
 		
-		JLabel cPerder = new JLabel(String.valueOf(ventana.getUsuario().getCaloriasPerder()));
+		JLabel cPerder = new JLabel(ventana.getUsuario().getCaloriasPerder()+"");
 		cPerder.setForeground(Color.WHITE);
 		cPerder.setFont(new Font("Tahoma", Font.BOLD, 11));
 		cPerder.setBounds(152, 235, 144, 14);
 		add(cPerder);
 					
-		JLabel cGanar = new JLabel(String.valueOf(ventana.getUsuario().getCaloriasGanar()));
+		JLabel cGanar = new JLabel(ventana.getUsuario().getCaloriasGanar()+" ");
 		cGanar.setForeground(Color.WHITE);
 		cGanar.setFont(new Font("Tahoma", Font.BOLD, 11));
 		cGanar.setBounds(152, 279, 144, 14);
 		add(cGanar);
 		
-		JLabel nombreUsuario = new JLabel(ventana.getUsuario().getNombre());
+		JLabel nombreUsuario = new JLabel (ventana.getUsuario().getNombre());
 		nombreUsuario.setForeground(Color.WHITE);
 		nombreUsuario.setFont(new Font("Tahoma", Font.BOLD, 11));
 		nombreUsuario.setBounds(152, 114, 144, 14);

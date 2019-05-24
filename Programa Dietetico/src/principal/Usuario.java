@@ -42,7 +42,7 @@ public class Usuario {
 	   
 		public void setNombre(String nombre) throws NombreException {
 	        if (nombre.length()<8) {
-				throw new NombreException();
+				throw new NombreException("Nombre incorrecto");
 			}
 			
 			this.nombre = nombre;
@@ -56,7 +56,7 @@ public class Usuario {
 
 	    public void setPass(String pass) throws ContraseñaException {
 			if (pass.length()<8) {
-				throw new ContraseñaException();
+				throw new ContraseñaException("Password incorrecto");
 				
 			}
 			this.pass = pass;
@@ -71,7 +71,7 @@ public class Usuario {
 	    public void setAltura(int altura) throws AlturaException {
 	    	
 	    	if (!(altura >=0 && altura<=300)) {
-				throw new AlturaException();
+				throw new AlturaException("Altura incorrecta");
 			}
 	    	this.altura = altura;
 	    }
@@ -83,7 +83,7 @@ public class Usuario {
 	    public void setEdad(int edad) throws EdadException {
 	    	
 	    	if (!(edad >=0 && edad<=100)) {
-				throw new EdadException();
+				throw new EdadException("Edad incorrecta");
 			}
 	        this.edad = edad;
 	    }
