@@ -74,7 +74,7 @@ public class Login extends JPanel {
 				String contrasenia = String.copyValueOf(campoContrasenia.getPassword());
 				
 				try {
-					ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.1.21:3306/programanutricion","dietista","dietista"));//CONECTAMOS A LA BASE DE DATOS
+					ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.56.1:3306/programanutricion","dietista","dietista"));//CONECTAMOS A LA BASE DE DATOS
 					
 					//AHORA USAMOS LA BASE DE DATOS
 					
@@ -112,9 +112,9 @@ public class Login extends JPanel {
 					//ESTE PARA CALORIAS GANAR   
 				   ResultSet rs4 = smt4.executeQuery("select * from calorias where nombre ='"+ventana.getUsuario().getNombre()+"'");
 				   System.out.println("select * from calorias where nombre ='"+ventana.getUsuario().getNombre()+"'");
-				   if(rs3.next()) {
+				   if(rs4.next()) {
 							
-					   ventana.getUsuario().setCaloriasGanar(rs4.getFloat("ganar"));
+					   ventana.getUsuario().setCaloriasGanar(rs4.getFloat("c_ganar"));
 							
 						}  
 						

@@ -28,16 +28,10 @@ public class DiseñaDieta extends JPanel{
 	
 	private Ventana ventana;
 	private Plato plato;
-	private Plato[] platt;
 	private JTextField nombreDieta;
 	private JTextField fechaIInicio;
 	private JTextField fechaFin;
 	private Dieta dieta;
-	
-	
-	
-	
-	
 	
 	/**
 	 * @return the plato
@@ -46,70 +40,12 @@ public class DiseñaDieta extends JPanel{
 		return plato;
 	}
 
-
-
-
-
-
 	/**
 	 * @param plato the plato to set
 	 */
 	public void setPlato(Plato plato) {
 		this.plato = plato;
 	}
-
-
-
-
-
-
-	/**
-	 * @return the platt
-	 */
-	public Plato[] getPlatt() {
-		return platt;
-	}
-
-
-
-
-
-
-	/**
-	 * @param platt the platt to set
-	 */
-	public void setPlatt(Plato[] platt) {
-		this.platt = platt;
-	}
-
-
-
-
-
-
-	/**
-	 * @return the dieta
-	 */
-	public Dieta getDieta() {
-		return dieta;
-	}
-
-
-
-
-
-
-	/**
-	 * @param dieta the dieta to set
-	 */
-	public void setDieta(Dieta dieta) {
-		this.dieta = dieta;
-	}
-
-
-
-
-
 
 	public DiseñaDieta(Ventana v) {
 		super();
@@ -396,10 +332,6 @@ public class DiseñaDieta extends JPanel{
 		alimentos.get("pasta").put(pastaConBesugo.getCalorias(),pastaConBesugo);
 		alimentos.get("pasta").put(pastaConTomate.getCalorias(),pastaConTomate);
 
-		LocalDate hoy = LocalDate.now();
-		LocalDate mañana = LocalDate.now();
-		
-		
 		this.ventana=v;
 		setSize(500,500);
 		setBackground(new Color(30, 144, 255));
@@ -483,7 +415,7 @@ public class DiseñaDieta extends JPanel{
 				LocalDate mañana = LocalDate.now();
 				
 				
-				
+				//PASTA & PERDER PESO
 				if(rdbtnPasta.isSelected() && botonPerder.isSelected()) {
 					Set<Integer> platosPasta=ventana.getTodosLosPlatos().get("pasta").keySet(); //obtienes todas las calorias de todos los platos de pasta
 					Iterator it=platosPasta.iterator();
@@ -496,6 +428,33 @@ public class DiseñaDieta extends JPanel{
 					ventana.setDietaUsuario(new Dieta("Adelgazar con pasta",pastaAdelgaza,hoy,mañana));
 					
 				}
+				//PASTA & MANTENER PESO
+				if(rdbtnPasta.isSelected() && botonMantener.isSelected()) {
+					Set<Integer> platosPasta=ventana.getTodosLosPlatos().get("pasta").keySet(); //obtienes todas las calorias de todos los platos de pasta
+					Iterator it=platosPasta.iterator();
+					while(it.hasNext()) {
+						int calorias=(int)it.next();
+						System.out.println("calorias: "+calorias);
+				}
+										
+					Plato[] pastaMantiene = {pastaConTomate, pastaConPollo, pastaConBesugo, pastaConPollo};
+					ventana.setDietaUsuario(new Dieta("Mantener con pasta",pastaMantiene,hoy,mañana));
+					
+				}
+				//PASTA & GANAR PESO
+				if(rdbtnPasta.isSelected() && botonGanar.isSelected()) {
+					Set<Integer> platosPasta=ventana.getTodosLosPlatos().get("pasta").keySet(); //obtienes todas las calorias de todos los platos de pasta
+					Iterator it=platosPasta.iterator();
+					while(it.hasNext()) {
+						int calorias=(int)it.next();
+						System.out.println("calorias: "+calorias);
+				}
+										
+					Plato[] pastaGana = {pastaConGarbanzos, pastaConPollo, pastaConAtun, pastaConTernera};
+					ventana.setDietaUsuario(new Dieta("Ganar peso con pasta",pastaGana,hoy,mañana));
+					
+				}
+				//PERDER CON ARROZ
 				if(rdbtnArroz.isSelected()&& botonPerder.isSelected()){
 					Set<Integer> platosArroz=ventana.getTodosLosPlatos().get("arroz").keySet(); //obtienes todas las calorias de todos los platos de arroz
 					Iterator it=platosArroz.iterator();
@@ -507,7 +466,31 @@ public class DiseñaDieta extends JPanel{
 					ventana.setDietaUsuario(new Dieta("Adelgazar con arroz",arrozAdelgaza,hoy,mañana));
 					//Dieta adelgazaArroz = new Dieta("Adelgazar con arroz",arrozAdelgaza,hoy,mañana);
 				}
-				
+				//MANTENER CON ARROZ
+				if(rdbtnArroz.isSelected()&& botonMantener.isSelected()){
+					Set<Integer> platosArroz=ventana.getTodosLosPlatos().get("arroz").keySet(); //obtienes todas las calorias de todos los platos de arroz
+					Iterator it=platosArroz.iterator();
+					while(it.hasNext()) {
+						int calorias=(int)it.next();
+						System.out.println("calorias: "+calorias);
+				}
+					Plato[] arrozMantener = {arrozConGamba, arrozConPollo, arrozConCalabaza, arrozConPavo};
+					ventana.setDietaUsuario(new Dieta("Mantener con arroz",arrozMantener,hoy,mañana));
+					
+				}
+				//GANAR CON ARROZ
+				if(rdbtnArroz.isSelected()&& botonGanar.isSelected()){
+					Set<Integer> platosArroz=ventana.getTodosLosPlatos().get("arroz").keySet(); //obtienes todas las calorias de todos los platos de arroz
+					Iterator it=platosArroz.iterator();
+					while(it.hasNext()) {
+						int calorias=(int)it.next();
+						System.out.println("calorias: "+calorias);
+				}
+					Plato[] arrozGanar = {arrozConGamba, arrozConPollo, arrozConAtun, arrozConTernera};
+					ventana.setDietaUsuario(new Dieta("Ganar peso con arroz",arrozGanar,hoy,mañana));
+					
+				}
+				//PERDER CON PATATA
 				if (rdbtnPatata.isSelected()&& botonPerder.isSelected()) {
 					Set<Integer> platosPatata=ventana.getTodosLosPlatos().get("patata").keySet(); //obtienes todas las calorias de todos los platos de patata
 					Iterator it=platosPatata.iterator();
@@ -515,9 +498,32 @@ public class DiseñaDieta extends JPanel{
 						int calorias=(int)it.next();
 						System.out.println("calorias: "+calorias);
 				}
-					//CREAR UNA DIETA CON LOS PLATOS DE PATATA QUE TENGAN MENOS CALORIAS
+					Plato[] patataPerder = {patataConEspinaca, patataConMerluza, patataConBrocoli, patataConPavo};
+					ventana.setDietaUsuario(new Dieta("Perder peso con patata",patataPerder,hoy,mañana));
 				}
-				
+				//MANTENER CON PATATA
+				if (rdbtnPatata.isSelected()&& botonMantener.isSelected()) {
+					Set<Integer> platosPatata=ventana.getTodosLosPlatos().get("patata").keySet(); //obtienes todas las calorias de todos los platos de patata
+					Iterator it=platosPatata.iterator();
+					while(it.hasNext()) {
+						int calorias=(int)it.next();
+						System.out.println("calorias: "+calorias);
+				}
+					Plato[] patataMantener = {patataConPavo, patataConMerluza, patataConLenguado, patataConPollo};
+					ventana.setDietaUsuario(new Dieta("Perder peso con patata",patataMantener,hoy,mañana));
+				}
+				//GANAR CON PATATA
+				if (rdbtnPatata.isSelected()&& botonGanar.isSelected()) {
+					Set<Integer> platosPatata=ventana.getTodosLosPlatos().get("patata").keySet(); //obtienes todas las calorias de todos los platos de patata
+					Iterator it=platosPatata.iterator();
+					while(it.hasNext()) {
+						int calorias=(int)it.next();
+						System.out.println("calorias: "+calorias);
+				}
+					Plato[] patataGanar = {patataConPavo, patataConTernera, patataConGarbanzos, patataConPollo};
+					ventana.setDietaUsuario(new Dieta("Perder peso con patata",patataGanar,hoy,mañana));
+				}
+				//PERDER CON LECHUGA
 				if (rdbtnLechuga.isSelected()&& botonPerder.isSelected()) {
 					Set<Integer> platosLechuga=ventana.getTodosLosPlatos().get("lechuga").keySet(); //obtienes todas las calorias de todos los platos de lechuga
 					Iterator it=platosLechuga.iterator();
@@ -525,7 +531,30 @@ public class DiseñaDieta extends JPanel{
 						int calorias=(int)it.next();
 						System.out.println("calorias: "+calorias);
 				}
-					//CREAR UNA DIETA CON LOS PLATOS DE LECHUGA QUE TENGAN MENOS CALORIAS
+					Plato[] lechugaPerder = {lechugaConPavo, patataConMerluza, lechugaConQueso, lechugaConPollo};
+					ventana.setDietaUsuario(new Dieta("Perder peso con lechuga",lechugaPerder,hoy,mañana));
+				}
+				//MANTENER CON LECHUGA
+				if (rdbtnLechuga.isSelected()&& botonMantener.isSelected()) {
+					Set<Integer> platosLechuga=ventana.getTodosLosPlatos().get("lechuga").keySet(); //obtienes todas las calorias de todos los platos de lechuga
+					Iterator it=platosLechuga.iterator();
+					while(it.hasNext()) {
+						int calorias=(int)it.next();
+						System.out.println("calorias: "+calorias);
+				}
+					Plato[] lechugaMantener = {lechugaConPavo, patataConPollo, lechugaConQueso, lechugaConAtun};
+					ventana.setDietaUsuario(new Dieta("Mantener peso con lechuga",lechugaMantener,hoy,mañana));
+				}
+				//GANAR CON LECHUGA
+				if (rdbtnLechuga.isSelected()&& botonGanar.isSelected()) {
+					Set<Integer> platosLechuga=ventana.getTodosLosPlatos().get("lechuga").keySet(); //obtienes todas las calorias de todos los platos de lechuga
+					Iterator it=platosLechuga.iterator();
+					while(it.hasNext()) {
+						int calorias=(int)it.next();
+						System.out.println("calorias: "+calorias);
+				}
+					Plato[] lechugaGanar = {lechugaConTernera, patataConPollo, lechugaConSolomillo, lechugaConAtun};
+					ventana.setDietaUsuario(new Dieta("Ganar peso con lechuga",lechugaGanar,hoy,mañana));
 				}
 				//ventana.setDietaUsuario(new Dieta(...));
 			

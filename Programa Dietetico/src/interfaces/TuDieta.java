@@ -111,11 +111,6 @@ public class TuDieta extends JPanel{
 		botonAtras.setBounds(373, 438, 89, 23);
 		add(botonAtras);
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setIcon(new ImageIcon("E:\\DAW\\Programacion\\Tercer trimestre\\PROYECTO FINAL\\dieta2.jpg"));
-		lblNewLabel.setBounds(387, 7, 103, 73);
-		add(lblNewLabel);
-		
 		
 		
 		setVisible(true);
