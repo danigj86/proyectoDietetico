@@ -2,27 +2,34 @@ package interfaces;
 
 import javax.swing.JPanel;
 import java.awt.Color;
+import java.awt.Dimension;
+
 import componentes.MiLabel;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import componentes.BotonMenu;
 
 public class Perfil extends JPanel {
 	private Ventana ventana;
+	ImageIcon imagen;
 	
 	
 	
-	public Perfil(Ventana v) {
+	public Perfil(Ventana v, String nombre) {
 		
 		super();
 		setFont(new Font("Tahoma", Font.PLAIN, 13));
 		this.ventana=v;
 		setSize(500,500);
 		
+		imagen = new ImageIcon(getClass().getResource(nombre));//CODIGO IMAGEN PRIMERA FORMA
+		setSize(imagen.getIconWidth(),imagen.getIconHeight());//CODIGO IMAGEN PRIMERA FORMA
 		
 		setBackground(new Color(30, 144, 255));
 		setLayout(null);
@@ -135,4 +142,13 @@ public class Perfil extends JPanel {
 		
 		setVisible(true);
 	}
+	
+	//CODIGO IMAGEN PRIMERA FORMA
+	
+	protected void paintComponent(Graphics g) {
+		Dimension d = getSize();
+		g.drawImage(imagen.getImage(),0,0, d.width, d.height,null);
+		this.setOpaque(false);
+		super.paintComponent(g);
+    }
 }

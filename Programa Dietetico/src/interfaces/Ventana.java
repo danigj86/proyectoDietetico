@@ -10,7 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
-import clases.Usuario;
+import principal.Usuario;
 import principal.Dieta;
 import principal.Plato;
 
@@ -35,7 +35,20 @@ public class Ventana extends JFrame{
 	private  final HashMap<String,HashMap<Integer,Plato>> todosLosPlatos;
 	
 	
-	
+	/**
+	 * @return the usuario
+	 */
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	/**
+	 * @param usuario the usuario to set
+	 */
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
 	
 	public Connection getCon() {
 		return con;
@@ -78,17 +91,7 @@ public class Ventana extends JFrame{
 	/**
 	 * @return the usuario
 	 */
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	/**
-	 * @param usuario the usuario to set
-	 */
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
+	
 	public Ventana(HashMap<String,HashMap<Integer,Plato>> todos) {
 		super();
 		this.todosLosPlatos=todos;
@@ -99,14 +102,14 @@ public class Ventana extends JFrame{
 		this.setResizable(false);
 		setLocationRelativeTo(null);
 		setIconImage(new ImageIcon(getClass().getResource("/interfaces/icono.JPG")).getImage());
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		//ESTO ES PARA CERRAR EL PROGRAMA
 				addWindowListener(new WindowAdapter() {
 					@Override
 					public void windowClosing(WindowEvent arg0) {
 						int opcionElegida = JOptionPane.showConfirmDialog(thisRef, "¡ Si te quedas, te puedes comer un brownie !", "¿Seguro que quieres salir?", JOptionPane.YES_NO_OPTION);
 						
-						if (opcionElegida ==2) {
+						if (opcionElegida ==0) {
 							System.exit(0);
 							
 						}
@@ -117,6 +120,7 @@ public class Ventana extends JFrame{
 		this.setVisible(true);
 	
 	}
+	
 	
 	public void irALogin() {
 		//1- Inicializar login, si no lo está ya
@@ -157,7 +161,7 @@ public class Ventana extends JFrame{
 	
 	public void irACalculacalorias() {
 		if (calCa==null) {
-			this.calCa= new CalculaCalorias(this,"fondo.jpg");
+			this.calCa= new CalculaCalorias(this,"fondoazul2.jpg");
 			
 		}
 		if(registro!=null) {
@@ -168,7 +172,7 @@ public class Ventana extends JFrame{
 	
 	public void irAPerfil() {
 		if (perfil==null) {
-			this.perfil= new Perfil(this);
+			this.perfil= new Perfil(this, "fondoazul2.jpg");
 			
 		}
 		if(calCa!=null) {
@@ -181,7 +185,7 @@ public class Ventana extends JFrame{
 	
 	public void irADiseñaDieta() {
 		if (diseñaDieta==null) {
-			this.diseñaDieta= new DiseñaDieta(this);
+			this.diseñaDieta= new DiseñaDieta(this, "fondoazul2.jpg");
 			
 		}
 		if(this!=null) {
@@ -192,7 +196,7 @@ public class Ventana extends JFrame{
 	
 	public void irATuDieta() {
 		if (tuDieta==null) {
-			this.tuDieta= new TuDieta(this);
+			this.tuDieta= new TuDieta(this, "fondoazul2.jpg");
 			
 		}
 		if(diseñaDieta!=null) {

@@ -1,12 +1,13 @@
 package interfaces;
 import javax.swing.JPanel;
+
 import javax.swing.JPasswordField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 //import clases.ContraseñaCortaException;
-import clases.Usuario;
+import principal.Usuario;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,6 +24,11 @@ import java.time.LocalDate;
 
 import componentes.BotonMenu;
 import componentes.MiLabel;
+import excepciones.AlturaException;
+import excepciones.ContraseñaException;
+import excepciones.EdadException;
+import excepciones.NombreException;
+
 import java.awt.Font;
 import java.awt.Graphics;
 
@@ -74,6 +80,7 @@ public class Login extends JPanel {
 				String contrasenia = String.copyValueOf(campoContrasenia.getPassword());
 				
 				try {
+					
 					ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.56.1:3306/programanutricion","dietista","dietista"));//CONECTAMOS A LA BASE DE DATOS
 					
 					//AHORA USAMOS LA BASE DE DATOS
@@ -89,8 +96,9 @@ public class Login extends JPanel {
 						//AQUI PONEMOS EL RESTO DE CAMPOS
 						int altura = rs.getInt("altura");
 						int edad = rs.getInt("edad");
-						
 						ventana.setUsuario(new Usuario(usuario, contrasenia, altura, edad));
+					}
+					
 				   		
 					//ESTE CODIGO ES PARA QUE APAREZCAN CALORIAS MANTENER, YA QUE ESTAN GUARDADAS EN OTRA TABLA	
 					ResultSet rs2 = smt2.executeQuery("select * from calorias where nombre ='"+ventana.getUsuario().getNombre()+"'");
@@ -115,12 +123,7 @@ public class Login extends JPanel {
 				   if(rs4.next()) {
 							
 					   ventana.getUsuario().setCaloriasGanar(rs4.getFloat("c_ganar"));
-							
-						}  
 						
-						else {
-							System.err.println("Esto no deberia pasar nunca! se encontró usuario y no calorías");
-						}
 						ventana.irAPerfil();
 					}else {
 						JOptionPane.showMessageDialog(ventana, "Contraseña incorrecta","Contraseña incorrecta", JOptionPane.ERROR_MESSAGE);
@@ -134,7 +137,19 @@ public class Login extends JPanel {
 				} /*catch (ContraseñaCortaException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				} */
+				} */ catch (NombreException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ContraseñaException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (AlturaException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (EdadException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		botonLogin.setBounds(139, 235, 89, 23);

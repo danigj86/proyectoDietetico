@@ -2,6 +2,7 @@ package interfaces;
 
 import javax.swing.JPanel;
 import java.awt.Color;
+import java.awt.Dimension;
 
 import componentes.BotonMenu;
 import componentes.MiLabel;
@@ -10,6 +11,7 @@ import principal.Dieta;
 import principal.Plato;
 
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
@@ -19,6 +21,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -32,6 +35,7 @@ public class DiseñaDieta extends JPanel{
 	private JTextField fechaIInicio;
 	private JTextField fechaFin;
 	private Dieta dieta;
+	ImageIcon imagen;
 	
 	/**
 	 * @return the plato
@@ -47,8 +51,12 @@ public class DiseñaDieta extends JPanel{
 		this.plato = plato;
 	}
 
-	public DiseñaDieta(Ventana v) {
+	public DiseñaDieta(Ventana v, String nombre) {
 		super();
+		
+		imagen = new ImageIcon(getClass().getResource(nombre));//CODIGO IMAGEN PRIMERA FORMA
+		setSize(imagen.getIconWidth(),imagen.getIconHeight());//CODIGO IMAGEN PRIMERA FORMA
+		
 		Alimento arrozIntegral = new Alimento("Arroz integral", 357, 7, 77, 2);
         Alimento arrozNormal = new Alimento("Arroz normal", 361, 6, 87, 1);
         Alimento aguacate = new Alimento("Aguacate", 223, 4, 2, 22);
@@ -64,7 +72,6 @@ public class DiseñaDieta extends JPanel{
         Alimento carneConejo = new Alimento("Carne de conejo", 124, 22, 0, 4);
         Alimento corderoMagro = new Alimento("Carne de cordero Magro", 122, 21, 0, 7);
         Alimento carneTernera = new Alimento("Carne de ternera", 109, 21, 0, 3);
-        Alimento solomillo = new Alimento("Carne de Solomillo", 272, 17, 0, 23);
         Alimento champiniones = new Alimento("Champiñones", 13, 2, 0, 1);
         Alimento coliflor = new Alimento("Coliflor", 13, 2, 2, 0);
         Alimento esparragos = new Alimento("Esparragos", 18, 3, 1, 0);
@@ -73,7 +80,7 @@ public class DiseñaDieta extends JPanel{
         Alimento gambas = new Alimento("Gambas cocidas", 107, 23, 0, 2);
         Alimento garbanzos = new Alimento("Garbanzos", 314, 20, 49, 3);
         Alimento guisantes = new Alimento("Guisantes", 357, 6, 11, 0);
-        Alimento hamburgeusaTernera = new Alimento("Hamburguesa Ternera", 265, 15, 5, 20);
+        Alimento hamburguesaTernera = new Alimento("Hamburguesa Ternera", 265, 15, 5, 20);
         Alimento harinaAvena = new Alimento("Harina de Avena", 401, 12, 73, 9);
         Alimento huevo = new Alimento("Huevo entero", 153, 12, 1, 11);
         Alimento lecheDesnatada = new Alimento("Leche desnatada", 35, 3, 5, 1);
@@ -94,6 +101,7 @@ public class DiseñaDieta extends JPanel{
         Alimento platano = new Alimento("Plátano", 79, 1, 19, 0);
         Alimento pollo = new Alimento("Pollo", 121, 20, 0, 4);
         Alimento quesoBurgos = new Alimento("Queso Burgos", 167, 11, 3, 11);
+        Alimento solomillo = new Alimento("Carne de Solomillo", 272, 17, 0, 23);
         Alimento tomate = new Alimento("Tomate", 14, 1, 3, 0);
         Alimento uvas = new Alimento("Uvas", 61, 1, 16, 0);
         Alimento yogurDesnatado = new Alimento("Yogur Desnatado", 52, 5, 6, 1);
@@ -134,12 +142,12 @@ public class DiseñaDieta extends JPanel{
        ArrayList<Alimento> arrozGamba=new ArrayList<Alimento>();
        arrozGamba.add(arrozIntegral);
        arrozGamba.add(gambas);
-       Plato arrozConGamba = new Plato(arrozGamba, "Mezclar 100 gramos de gambas con 200 gramos de arroz cocido", "Arroz con pollo");
+       Plato arrozConGamba = new Plato(arrozGamba, "Mezclar 100 gramos de gambas con 200 gramos de arroz cocido", "Arroz con gambas");
        
        ArrayList<Alimento> arrozTernera=new ArrayList<Alimento>();
-       arrozGamba.add(arrozIntegral);
-       arrozGamba.add(carneTernera);
-       Plato arrozConTernera = new Plato(arrozTernera, "Mezclar 100 gramos de ternera con 200 gramos de arroz cocido", "Arroz con pollo");
+       arrozTernera.add(arrozIntegral);
+       arrozTernera.add(hamburguesaTernera);
+       Plato arrozConTernera = new Plato(arrozTernera, "Mezclar 100 gramos de ternera con 200 gramos de arroz cocido", "Arroz con ternera");
        
        //PLATOS PARA PATATA
        
@@ -151,7 +159,8 @@ public class DiseñaDieta extends JPanel{
        ArrayList<Alimento> patataGarbanzos=new ArrayList<Alimento>();
        patataGarbanzos.add(patataCocida);
        patataGarbanzos.add(garbanzos);
-       Plato patataConGarbanzos = new Plato(patataGarbanzos, "Aqui las instrucciones para cocinar", "Patata con garbanzos");
+       patataGarbanzos.add(guisantes);
+       Plato patataConGarbanzos = new Plato(patataGarbanzos, "Aqui las instrucciones para cocinar", "Patata con garbanzos y guisantes");
        
        ArrayList<Alimento> patataLenguado=new ArrayList<Alimento>();
        patataLenguado.add(patataCocida);
@@ -170,8 +179,9 @@ public class DiseñaDieta extends JPanel{
        
        ArrayList<Alimento> patataTernera=new ArrayList<Alimento>();
        patataTernera.add(patataCocida);
-       patataTernera.add(carneTernera);
-       Plato patataConTernera = new Plato(patataTernera, "Aqui las instrucciones para cocinar", "Patata con ternera");
+       patataTernera.add(hamburguesaTernera);
+       patataTernera.add(guisantes);
+       Plato patataConTernera = new Plato(patataTernera, "Aqui las instrucciones para cocinar", "Patata con ternera y guisantes");
        
        ArrayList<Alimento> patataPollo=new ArrayList<Alimento>();
        patataPollo.add(patataCocida);
@@ -207,19 +217,22 @@ public class DiseñaDieta extends JPanel{
        lechugaPollo.add(pollo);
        lechugaPollo.add(lechuga);
        lechugaPollo.add(tomate);
-       Plato lechugaConPollo = new Plato(lechugaPollo, "Aqui las instrucciones para cocinar", "Lechuga con pollo y tomate");
+       lechugaPollo.add(guisantes);
+       Plato lechugaConPollo = new Plato(lechugaPollo, "Aqui las instrucciones para cocinar", "Lechuga con pollo, tomate y guisantes.");
        
        ArrayList<Alimento> lechugaSolomillo=new ArrayList<Alimento>();
        lechugaSolomillo.add(solomillo);
        lechugaSolomillo.add(lechuga);
        lechugaSolomillo.add(garbanzos);
-       Plato lechugaConSolomillo = new Plato(lechugaSolomillo, "Aqui las instrucciones para cocinar", "Lechuga con garbanzos y solomillo");
+       lechugaSolomillo.add(guisantes);
+       Plato lechugaConSolomillo = new Plato(lechugaSolomillo, "Aqui las instrucciones para cocinar", "Lechuga con solomillo, guisantes y garbanzos");
        
        ArrayList<Alimento> lechugaTernera=new ArrayList<Alimento>();
-       lechugaTernera.add(carneTernera);
+       lechugaTernera.add(hamburguesaTernera);
        lechugaTernera.add(lechuga);
        lechugaTernera.add(garbanzos);
-       Plato lechugaConTernera = new Plato(lechugaTernera, "Aqui las instrucciones para cocinar", "Lechuga con garbanzos y ternera");
+       lechugaTernera.add(guisantes);
+       Plato lechugaConTernera = new Plato(lechugaTernera, "Aqui las instrucciones para cocinar", "Lechuga con ternera, guisantes y garbanzos");
        
        ArrayList<Alimento> lechugaAtun=new ArrayList<Alimento>();
        lechugaAtun.add(atunLata);
@@ -268,7 +281,7 @@ public class DiseñaDieta extends JPanel{
        Plato pastaConAtun = new Plato(pastaAtun, "Aqui las instrucciones para cocinar", "Pasta con atún y tomate");
        
        ArrayList<Alimento> pastaTernera=new ArrayList<Alimento>();
-       pastaTernera.add(carneTernera);
+       pastaTernera.add(hamburguesaTernera);
        pastaTernera.add(tomate);
        pastaTernera.add(pasta);
        Plato pastaConTernera = new Plato(pastaTernera, "Aqui las instrucciones para cocinar", "Pasta con ternera y tomate");
@@ -542,7 +555,7 @@ public class DiseñaDieta extends JPanel{
 						int calorias=(int)it.next();
 						System.out.println("calorias: "+calorias);
 				}
-					Plato[] lechugaMantener = {lechugaConPavo, patataConPollo, lechugaConQueso, lechugaConAtun};
+					Plato[] lechugaMantener = {lechugaConPavo, lechugaConPollo, lechugaConQueso, lechugaConAtun};
 					ventana.setDietaUsuario(new Dieta("Mantener peso con lechuga",lechugaMantener,hoy,mañana));
 				}
 				//GANAR CON LECHUGA
@@ -553,7 +566,7 @@ public class DiseñaDieta extends JPanel{
 						int calorias=(int)it.next();
 						System.out.println("calorias: "+calorias);
 				}
-					Plato[] lechugaGanar = {lechugaConTernera, patataConPollo, lechugaConSolomillo, lechugaConAtun};
+					Plato[] lechugaGanar = {lechugaConTernera, lechugaConPollo, lechugaConSolomillo, lechugaConAtun};
 					ventana.setDietaUsuario(new Dieta("Ganar peso con lechuga",lechugaGanar,hoy,mañana));
 				}
 				//ventana.setDietaUsuario(new Dieta(...));
@@ -602,4 +615,13 @@ public class DiseñaDieta extends JPanel{
 		
 		setVisible(true);
 	}
+	
+	//CODIGO IMAGEN PRIMERA FORMA
+	
+	protected void paintComponent(Graphics g) {
+		Dimension d = getSize();
+		g.drawImage(imagen.getImage(),0,0, d.width, d.height,null);
+		this.setOpaque(false);
+		super.paintComponent(g);
+    }
 }

@@ -5,7 +5,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 
-import clases.Usuario;
 import componentes.BotonMenu;
 
 import javax.swing.JPasswordField;
@@ -27,6 +26,7 @@ import excepciones.AlturaException;
 import excepciones.ContraseñaException;
 import excepciones.EdadException;
 import excepciones.NombreException;
+import principal.Usuario;
 
 import java.awt.Font;
 import java.awt.Graphics;
@@ -160,7 +160,7 @@ public class Registro extends JPanel{
 							} catch (SQLException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
-							}/*catch (ContraseñaException e2) {
+							}catch (ContraseñaException e2) {
 								 //JOptionPane.showMessageDialog(ventana, "La contraseña debe tener al menos 8 caracteres", "Password incorrecto", JOptionPane.ERROR_MESSAGE);
 									//e2.printStackTrace();
 							}catch(NombreException e3) {
@@ -173,7 +173,7 @@ public class Registro extends JPanel{
 								JOptionPane.showMessageDialog(ventana, "La edad es incorrecta", "Edad incorrecta", JOptionPane.ERROR_MESSAGE);
 								//e5.printStackTrace();
 							}
-							*/
+							
 							
 			        }
 			        }
