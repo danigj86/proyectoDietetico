@@ -5,13 +5,24 @@ import java.awt.Color;
 import java.awt.Dimension;
 
 import componentes.MiLabel;
+import excepciones.FechaException;
+import principal.Dieta;
+import principal.Plato;
+import principal.Usuario;
+
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDate;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import componentes.BotonMenu;
 
@@ -72,7 +83,7 @@ public class Perfil extends JPanel {
 		lblGanarPeso.setBounds(38, 279, 103, 14);
 		add(lblGanarPeso);
 		
-		System.out.println("en perfil:"+ventana.getUsuario().getCaloriasMantener());
+		
 		JLabel cMantener = new JLabel(ventana.getUsuario().getCaloriasMantener()+"");
 		cMantener.setForeground(Color.WHITE);
 		cMantener.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -123,6 +134,48 @@ public class Perfil extends JPanel {
 		botonDietaActual.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				try {
+					
+					
+					ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.56.1:3306/programanutricion","dietista","dietista"));//CONECTAMOS A LA BASE DE DATOS
+					
+					Statement smt = ventana.getCon().createStatement(); //smt para los datos del usuario
+					
+					ResultSet rs = smt.executeQuery("select * from dieta where nombre_usu ='"+ventana.getUsuario().getNombre()+"'");
+					
+					
+					
+					if (rs.next()) {
+						
+						String nombre_dieta = rs.getString("nombre_dieta");
+						String desayuno = rs.getString("desayuno");
+						String almuerzo = rs.getString("almuerzo");
+						String merienda = rs.getString("merienda");
+						String cena = rs.getString("cena");
+						//las fecha no las pongo xq no las voy a usar
+						System.out.println(desayuno + almuerzo+ merienda+ cena);
+						ventana.setDietaUsuario(new Dieta(desayuno, almuerzo, merienda, cena));
+						/*
+						 OTRA FORMA:
+						 
+						 ventana.getDietaUsuario().setAlmuerzo(rs.getString("desayuno"));
+						 ...
+						 ...
+						 ASI CON LOS VALORES QUE QUIERO OBTENER, SIN NECESIDAD DE CREAR EL OBJETO DIETA
+						 */
+					}
+					
+				
+					
+		
+					ventana.getCon().close();
+					
+				} catch (SQLException ex) {
+					JOptionPane.showMessageDialog(ventana, "Error","Error", JOptionPane.ERROR_MESSAGE);
+					ex.printStackTrace();
+				}
+				
+				
 				ventana.irATuDieta();
 			}
 		});
@@ -130,16 +183,7 @@ public class Perfil extends JPanel {
 		botonDietaActual.setBounds(283, 325, 133, 34);
 		add(botonDietaActual);
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+	
 		setVisible(true);
 	}
 	

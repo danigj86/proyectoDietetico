@@ -77,29 +77,33 @@ public class TuDieta extends JPanel{
 		lblCena.setBounds(10, 362, 189, 14);
 		add(lblCena);
 		
-		
-		JLabel desayunoAqui = new JLabel(ventana.getDietaUsuario().getPlato()[0].getNombre()+", calorías: "+ventana.getDietaUsuario().getPlato()[0].getCalorias()); //ventana.getDietaUsuario().getPlato()[0].getPlato(0)
+		JLabel desayunoAqui = new JLabel(ventana.getDietaUsuario().getDesayuno()+"calorías: "+ventana.getDietaUsuario().getPlato()[0].getCalorias());
+		//JLabel desayunoAqui = new JLabel(ventana.getDietaUsuario().getPlato()[0].getNombre()+", calorías: "+ventana.getDietaUsuario().getPlato()[0].getCalorias()); //ventana.getDietaUsuario().getPlato()[0].getPlato(0)
 		desayunoAqui.setVerticalAlignment(SwingConstants.TOP);
 		desayunoAqui.setForeground(Color.WHITE);
 		desayunoAqui.setFont(new Font("Tahoma", Font.BOLD, 11));
 		desayunoAqui.setBounds(10, 108, 466, 57);
 		add(desayunoAqui);
 		
-		JLabel almuerzoAqui = new JLabel(ventana.getDietaUsuario().getPlato()[1].getNombre()+", calorías: "+ventana.getDietaUsuario().getPlato()[1].getCalorias());
+		
+		JLabel almuerzoAqui = new JLabel(ventana.getDietaUsuario().getAlmuerzo());
+		//JLabel almuerzoAqui = new JLabel(ventana.getDietaUsuario().getPlato()[1].getNombre()+", calorías: "+ventana.getDietaUsuario().getPlato()[1].getCalorias());
 		almuerzoAqui.setVerticalAlignment(SwingConstants.TOP);
 		almuerzoAqui.setForeground(Color.WHITE);
 		almuerzoAqui.setFont(new Font("Tahoma", Font.BOLD, 11));
 		almuerzoAqui.setBounds(10, 201, 466, 57);
 		add(almuerzoAqui);
 		
-		JLabel meriendaAqui = new JLabel(ventana.getDietaUsuario().getPlato()[2].getNombre()+", calorías: "+ventana.getDietaUsuario().getPlato()[2].getCalorias());
+		JLabel meriendaAqui = new JLabel(ventana.getDietaUsuario().getMerienda());
+		//JLabel meriendaAqui = new JLabel(ventana.getDietaUsuario().getPlato()[2].getNombre()+", calorías: "+ventana.getDietaUsuario().getPlato()[2].getCalorias());
 		meriendaAqui.setVerticalAlignment(SwingConstants.TOP);
 		meriendaAqui.setForeground(Color.WHITE);
 		meriendaAqui.setFont(new Font("Tahoma", Font.BOLD, 11));
 		meriendaAqui.setBounds(10, 294, 466, 57);
 		add(meriendaAqui);
 		
-		JLabel cenaAqui = new JLabel(ventana.getDietaUsuario().getPlato()[3].getNombre()+", calorías: "+ventana.getDietaUsuario().getPlato()[3].getCalorias());
+		JLabel cenaAqui = new JLabel(ventana.getDietaUsuario().getCena());
+		//JLabel cenaAqui = new JLabel(ventana.getDietaUsuario().getPlato()[3].getNombre()+", calorías: "+ventana.getDietaUsuario().getPlato()[3].getCalorias());
 		cenaAqui.setVerticalAlignment(SwingConstants.TOP);
 		cenaAqui.setForeground(Color.WHITE);
 		cenaAqui.setFont(new Font("Tahoma", Font.BOLD, 11));

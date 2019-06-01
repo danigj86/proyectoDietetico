@@ -101,8 +101,8 @@ public class Login extends JPanel {
 					
 				   		
 					//ESTE CODIGO ES PARA QUE APAREZCAN CALORIAS MANTENER, YA QUE ESTAN GUARDADAS EN OTRA TABLA	
-					ResultSet rs2 = smt2.executeQuery("select * from calorias where nombre ='"+ventana.getUsuario().getNombre()+"'");
-					System.out.println("select * from calorias where nombre ='"+ventana.getUsuario().getNombre()+"'");
+					ResultSet rs2 = smt2.executeQuery("select * from calorias where nombre ='"+ventana.getUsuario().getNombre()+"'");//EN ESTE CASO, LLAMAMOS A LA CLAVE FORANEA PARA RECUPERAR EL RESTO DE DATOS
+					
 					if(rs2.next()) {
 						
 						ventana.getUsuario().setCaloriasMantener(rs2.getFloat("c_mantener"));
@@ -111,7 +111,7 @@ public class Login extends JPanel {
 					
 					//ESTE PARA CALORIAS PERDER
 					 ResultSet rs3 = smt3.executeQuery("select * from calorias where nombre ='"+ventana.getUsuario().getNombre()+"'");
-					   System.out.println("select * from calorias where nombre ='"+ventana.getUsuario().getNombre()+"'");
+					   
 					   if(rs3.next()) {
 								
 						ventana.getUsuario().setCaloriasPerder(rs3.getFloat("c_perder"));
@@ -119,7 +119,7 @@ public class Login extends JPanel {
 						}
 					//ESTE PARA CALORIAS GANAR   
 				   ResultSet rs4 = smt4.executeQuery("select * from calorias where nombre ='"+ventana.getUsuario().getNombre()+"'");
-				   System.out.println("select * from calorias where nombre ='"+ventana.getUsuario().getNombre()+"'");
+				   
 				   if(rs4.next()) {
 							
 					   ventana.getUsuario().setCaloriasGanar(rs4.getFloat("c_ganar"));

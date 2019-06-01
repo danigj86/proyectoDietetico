@@ -103,6 +103,9 @@ public class Ventana extends JFrame{
 		setLocationRelativeTo(null);
 		setIconImage(new ImageIcon(getClass().getResource("/interfaces/icono.JPG")).getImage());
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		
+		
+		
 		//ESTO ES PARA CERRAR EL PROGRAMA
 				addWindowListener(new WindowAdapter() {
 					@Override

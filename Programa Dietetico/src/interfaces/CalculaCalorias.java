@@ -58,7 +58,8 @@ public class CalculaCalorias extends JPanel{
 	public CalculaCalorias(Ventana v, String nombre) {
 		super();
 		
-		
+		imagen = new ImageIcon(getClass().getResource(nombre));//CODIGO IMAGEN PRIMERA FORMA
+		setSize(imagen.getIconWidth(),imagen.getIconHeight());//CODIGO IMAGEN PRIMERA FORMA
 		
 		this.ventana=v;
 		setSize(500,500);
@@ -238,6 +239,8 @@ public void Calorias(){
         //Declaramos las variables
         float altura, caloriasMantener, caloriasPerder,caloriasGanar, edad, peso;
         String actividad ;
+         
+        
         
         //Verificamos si los campos estan vacios
         
@@ -281,7 +284,7 @@ public void Calorias(){
                         
                         try {
 		                	ventana.setUsuario(new Usuario(ventana.getUsuario().getNombre(), caloriasMantener,caloriasPerder, caloriasGanar));
-							ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.56.1:3306/programanutricion","dietista","dietista"));
+							ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.1.20:3306/programanutricion","dietista","dietista"));
 							//usamos
 							PreparedStatement smt =
 							ventana.getCon().prepareStatement("insert calorias values(?,?,?,?)");
@@ -311,7 +314,7 @@ public void Calorias(){
                         
                         try {
 		                	ventana.setUsuario(new Usuario(ventana.getUsuario().getNombre(), caloriasMantener,caloriasPerder, caloriasGanar));
-							ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.56.1:3306/programanutricion","dietista","dietista"));
+							ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.1.20:3306/programanutricion","dietista","dietista"));
 							//usamos
 							PreparedStatement smt =
 							ventana.getCon().prepareStatement("insert calorias values(?,?,?,?)");
@@ -347,7 +350,7 @@ public void Calorias(){
                         
                         try {
 		                	ventana.setUsuario(new Usuario(ventana.getUsuario().getNombre(), caloriasMantener,caloriasPerder, caloriasGanar));
-							ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.56.1:3306/programanutricion","dietista","dietista"));
+							ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.1.20:3306/programanutricion","dietista","dietista"));
 							//usamos
 							PreparedStatement smt =
 							ventana.getCon().prepareStatement("insert calorias values(?,?,?,?)");
@@ -377,7 +380,7 @@ public void Calorias(){
                         
                         try {
 		                	ventana.setUsuario(new Usuario(ventana.getUsuario().getNombre(), caloriasMantener,caloriasPerder, caloriasGanar));
-							ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.56.1:3306/programanutricion","dietista","dietista"));
+							ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.1.20:3306/programanutricion","dietista","dietista"));
 							//usamos
 							PreparedStatement smt =
 							ventana.getCon().prepareStatement("insert calorias values(?,?,?,?)");
@@ -413,7 +416,7 @@ public void Calorias(){
                         
                         try {
 		                	ventana.setUsuario(new Usuario(ventana.getUsuario().getNombre(), caloriasMantener,caloriasPerder, caloriasGanar));
-							ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.56.1:3306/programanutricion","dietista","dietista"));
+							ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.1.20:3306/programanutricion","dietista","dietista"));
 							//usamos
 							PreparedStatement smt =
 							ventana.getCon().prepareStatement("insert calorias values(?,?,?,?)");
@@ -443,7 +446,7 @@ public void Calorias(){
                         
                         try {
 		                	ventana.setUsuario(new Usuario(ventana.getUsuario().getNombre(), caloriasMantener,caloriasPerder, caloriasGanar));
-							ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.56.1:3306/programanutricion","dietista","dietista"));
+							ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.1.20:3306/programanutricion","dietista","dietista"));
 							//usamos
 							PreparedStatement smt =
 							ventana.getCon().prepareStatement("insert calorias values(?,?,?,?)");
@@ -478,7 +481,7 @@ public void Calorias(){
                         
                         try {
 		                	ventana.setUsuario(new Usuario(ventana.getUsuario().getNombre(), caloriasMantener,caloriasPerder, caloriasGanar));
-							ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.56.1:3306/programanutricion","dietista","dietista"));
+							ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.1.20:3306/programanutricion","dietista","dietista"));
 							//usamos
 							PreparedStatement smt =
 							ventana.getCon().prepareStatement("insert calorias values(?,?,?,?)");
@@ -508,7 +511,7 @@ public void Calorias(){
                         
                         try {
 		                	ventana.setUsuario(new Usuario(ventana.getUsuario().getNombre(), caloriasMantener,caloriasPerder, caloriasGanar));
-							ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.56.1:3306/programanutricion","dietista","dietista"));
+							ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.1.20:3306/programanutricion","dietista","dietista"));
 							//usamos
 							PreparedStatement smt =
 							ventana.getCon().prepareStatement("insert calorias values(?,?,?,?)");

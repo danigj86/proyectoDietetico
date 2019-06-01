@@ -397,7 +397,7 @@ public class Main {
  		//Dieta dieta2 = new Dieta("dieta ejemplo", new Plato{arrozConTernera,arrozConPollo),  hoy, mañana);
  		
  		
- 		Dieta dieta1 = new Dieta("dieta ejemplo",platoo,hoy,mañana);
+ 		//Dieta dieta1 = new Dieta("dieta ejemplo",platoo,hoy,mañana);
  		
  		
 		

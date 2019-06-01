@@ -12,6 +12,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -136,11 +140,11 @@ public class Registro extends JPanel{
 			                
 			                JOptionPane.showMessageDialog(null, "Registro efectuado correctamente.","Atención", JOptionPane.INFORMATION_MESSAGE);
 			                
-			              
+			                BufferedWriter bw =null;
 			                
 			                try {
 			                	ventana.setUsuario(new Usuario(nombre, pass,altura, edad));
-								ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.56.1:3306/programanutricion","dietista","dietista"));
+								ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.1.20:3306/programanutricion","dietista","dietista"));
 								//usamos
 								PreparedStatement smt =
 								ventana.getCon().prepareStatement("insert into datos_usuario1 values(?,?,?,?)");
@@ -154,6 +158,19 @@ public class Registro extends JPanel{
 								smt.executeUpdate();
 								ventana.getCon().close();
 								ventana.irACalculacalorias();
+								
+								File registro = new File("./registro.txt");
+								
+								FileWriter fw =new FileWriter(registro,true);
+															bw = new BufferedWriter(fw);
+															bw.write("El usuario :"+ventana.getUsuario().getNombre()+" se ha registrado con la edad  :"+ventana.getUsuario().getEdad()+", la altura: "+ventana.getUsuario().getEdad()+" y el password: "+ventana.getUsuario().getPass()+"\n");
+															bw.close();
+								
+								
+								
+								
+								
+								
 			                }catch (SQLIntegrityConstraintViolationException iex){
 								JOptionPane.showMessageDialog(ventana, "El nombre de usuario ya está registrado","Nombre de usuario inválido", JOptionPane.ERROR_MESSAGE);
 								
@@ -172,7 +189,14 @@ public class Registro extends JPanel{
 							}catch(EdadException e5) {
 								JOptionPane.showMessageDialog(ventana, "La edad es incorrecta", "Edad incorrecta", JOptionPane.ERROR_MESSAGE);
 								//e5.printStackTrace();
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
 							}
+			                
+			                
+			                
+			                
 							
 							
 			        }

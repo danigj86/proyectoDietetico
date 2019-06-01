@@ -1,0 +1,13 @@
+El usuario :narutooooo se ha registrado con la edad  :22, la altura: 22 y el password: 55555555
+El usuario :lllllllllllllllll se ha registrado con la edad  :22, la altura: 22 y el password: 55555555555
+El usuario :5555555555 se ha registrado con la edad  :55, la altura: 55 y el password: 5555555555
+El usuario :66666666 se ha registrado con la edad  :22, la altura: 22 y el password: 444444444
+El usuario :kkkkkkkkk se ha registrado con la edad  :66, la altura: 66 y el password: 3333333333
+El usuario :joseeeee se ha registrado con la edad  :22, la altura: 22 y el password: 111111111
+El usuario :666666666 se ha registrado con la edad  :55, la altura: 55 y el password: 111111111
+El usuario :holaaaaaaa se ha registrado con la edad  :22, la altura: 22 y el password: 22222222
+El usuario :pepeeeee se ha registrado con la edad  :22, la altura: 22 y el password: 5555555555
+El usuario :lalalala se ha registrado con la edad  :22, la altura: 22 y el password: 111111111
+El usuario :sara1234 se ha registrado con la edad  :50, la altura: 50 y el password: 11111111
+El usuario :pepitoooo se ha registrado con la edad  :36, la altura: 36 y el password: 111111111
+El usuario :pepitogrillo se ha registrado con la edad  :100, la altura: 100 y el password: 11111111

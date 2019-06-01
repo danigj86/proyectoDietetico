@@ -30,10 +30,11 @@ public class Usuario {
 		//CONSTRUCTOR PARA CALORIAS
 	    public Usuario(String nombre, float caloriasMantener, float caloriasPerder, float caloriasGanar) {
 			super();
+			this.nombre = nombre;
 			this.caloriasMantener = caloriasMantener;
 			this.caloriasPerder = caloriasPerder;
 			this.caloriasGanar = caloriasGanar;
-		}
+		} 
 
 	    public String getNombre() {
 	        return nombre;

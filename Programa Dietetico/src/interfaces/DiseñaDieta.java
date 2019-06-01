@@ -6,15 +6,24 @@ import java.awt.Dimension;
 
 import componentes.BotonMenu;
 import componentes.MiLabel;
+import excepciones.AlturaException;
+import excepciones.FechaException;
 import principal.Alimento;
 import principal.Dieta;
 import principal.Plato;
+import principal.Usuario;
 
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -23,6 +32,7 @@ import java.util.Set;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
@@ -408,175 +418,7 @@ public class DiseñaDieta extends JPanel{
 		alimentoBase.add(rdbtnPatata);
 		add(rdbtnPatata);
 		
-		BotonMenu botonAtras = new BotonMenu("Atrás");
-		botonAtras.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				ventana.irAEligeLoginRegistro();
-			}
-		});
 		
-		botonAtras.setBounds(376, 430, 89, 23);
-		add(botonAtras);
-		
-		BotonMenu botonCrearDieta = new BotonMenu("Crear Dieta");
-		botonCrearDieta.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-				LocalDate hoy = LocalDate.now();
-				LocalDate mañana = LocalDate.now();
-				
-				
-				//PASTA & PERDER PESO
-				if(rdbtnPasta.isSelected() && botonPerder.isSelected()) {
-					Set<Integer> platosPasta=ventana.getTodosLosPlatos().get("pasta").keySet(); //obtienes todas las calorias de todos los platos de pasta
-					Iterator it=platosPasta.iterator();
-					while(it.hasNext()) {
-						int calorias=(int)it.next();
-						System.out.println("calorias: "+calorias);
-				}
-										
-					Plato[] pastaAdelgaza = {pastaConTomate, pastaConEspinaca, pastaConBesugo, pastaConMerluza};
-					ventana.setDietaUsuario(new Dieta("Adelgazar con pasta",pastaAdelgaza,hoy,mañana));
-					
-				}
-				//PASTA & MANTENER PESO
-				if(rdbtnPasta.isSelected() && botonMantener.isSelected()) {
-					Set<Integer> platosPasta=ventana.getTodosLosPlatos().get("pasta").keySet(); //obtienes todas las calorias de todos los platos de pasta
-					Iterator it=platosPasta.iterator();
-					while(it.hasNext()) {
-						int calorias=(int)it.next();
-						System.out.println("calorias: "+calorias);
-				}
-										
-					Plato[] pastaMantiene = {pastaConTomate, pastaConPollo, pastaConBesugo, pastaConPollo};
-					ventana.setDietaUsuario(new Dieta("Mantener con pasta",pastaMantiene,hoy,mañana));
-					
-				}
-				//PASTA & GANAR PESO
-				if(rdbtnPasta.isSelected() && botonGanar.isSelected()) {
-					Set<Integer> platosPasta=ventana.getTodosLosPlatos().get("pasta").keySet(); //obtienes todas las calorias de todos los platos de pasta
-					Iterator it=platosPasta.iterator();
-					while(it.hasNext()) {
-						int calorias=(int)it.next();
-						System.out.println("calorias: "+calorias);
-				}
-										
-					Plato[] pastaGana = {pastaConGarbanzos, pastaConPollo, pastaConAtun, pastaConTernera};
-					ventana.setDietaUsuario(new Dieta("Ganar peso con pasta",pastaGana,hoy,mañana));
-					
-				}
-				//PERDER CON ARROZ
-				if(rdbtnArroz.isSelected()&& botonPerder.isSelected()){
-					Set<Integer> platosArroz=ventana.getTodosLosPlatos().get("arroz").keySet(); //obtienes todas las calorias de todos los platos de arroz
-					Iterator it=platosArroz.iterator();
-					while(it.hasNext()) {
-						int calorias=(int)it.next();
-						System.out.println("calorias: "+calorias);
-				}
-					Plato[] arrozAdelgaza = {arrozConEspinacas, arrozConMerluza, arrozConCalabaza, arrozConPavo};
-					ventana.setDietaUsuario(new Dieta("Adelgazar con arroz",arrozAdelgaza,hoy,mañana));
-					//Dieta adelgazaArroz = new Dieta("Adelgazar con arroz",arrozAdelgaza,hoy,mañana);
-				}
-				//MANTENER CON ARROZ
-				if(rdbtnArroz.isSelected()&& botonMantener.isSelected()){
-					Set<Integer> platosArroz=ventana.getTodosLosPlatos().get("arroz").keySet(); //obtienes todas las calorias de todos los platos de arroz
-					Iterator it=platosArroz.iterator();
-					while(it.hasNext()) {
-						int calorias=(int)it.next();
-						System.out.println("calorias: "+calorias);
-				}
-					Plato[] arrozMantener = {arrozConGamba, arrozConPollo, arrozConCalabaza, arrozConPavo};
-					ventana.setDietaUsuario(new Dieta("Mantener con arroz",arrozMantener,hoy,mañana));
-					
-				}
-				//GANAR CON ARROZ
-				if(rdbtnArroz.isSelected()&& botonGanar.isSelected()){
-					Set<Integer> platosArroz=ventana.getTodosLosPlatos().get("arroz").keySet(); //obtienes todas las calorias de todos los platos de arroz
-					Iterator it=platosArroz.iterator();
-					while(it.hasNext()) {
-						int calorias=(int)it.next();
-						System.out.println("calorias: "+calorias);
-				}
-					Plato[] arrozGanar = {arrozConGamba, arrozConPollo, arrozConAtun, arrozConTernera};
-					ventana.setDietaUsuario(new Dieta("Ganar peso con arroz",arrozGanar,hoy,mañana));
-					
-				}
-				//PERDER CON PATATA
-				if (rdbtnPatata.isSelected()&& botonPerder.isSelected()) {
-					Set<Integer> platosPatata=ventana.getTodosLosPlatos().get("patata").keySet(); //obtienes todas las calorias de todos los platos de patata
-					Iterator it=platosPatata.iterator();
-					while(it.hasNext()) {
-						int calorias=(int)it.next();
-						System.out.println("calorias: "+calorias);
-				}
-					Plato[] patataPerder = {patataConEspinaca, patataConMerluza, patataConBrocoli, patataConPavo};
-					ventana.setDietaUsuario(new Dieta("Perder peso con patata",patataPerder,hoy,mañana));
-				}
-				//MANTENER CON PATATA
-				if (rdbtnPatata.isSelected()&& botonMantener.isSelected()) {
-					Set<Integer> platosPatata=ventana.getTodosLosPlatos().get("patata").keySet(); //obtienes todas las calorias de todos los platos de patata
-					Iterator it=platosPatata.iterator();
-					while(it.hasNext()) {
-						int calorias=(int)it.next();
-						System.out.println("calorias: "+calorias);
-				}
-					Plato[] patataMantener = {patataConPavo, patataConMerluza, patataConLenguado, patataConPollo};
-					ventana.setDietaUsuario(new Dieta("Perder peso con patata",patataMantener,hoy,mañana));
-				}
-				//GANAR CON PATATA
-				if (rdbtnPatata.isSelected()&& botonGanar.isSelected()) {
-					Set<Integer> platosPatata=ventana.getTodosLosPlatos().get("patata").keySet(); //obtienes todas las calorias de todos los platos de patata
-					Iterator it=platosPatata.iterator();
-					while(it.hasNext()) {
-						int calorias=(int)it.next();
-						System.out.println("calorias: "+calorias);
-				}
-					Plato[] patataGanar = {patataConPavo, patataConTernera, patataConGarbanzos, patataConPollo};
-					ventana.setDietaUsuario(new Dieta("Perder peso con patata",patataGanar,hoy,mañana));
-				}
-				//PERDER CON LECHUGA
-				if (rdbtnLechuga.isSelected()&& botonPerder.isSelected()) {
-					Set<Integer> platosLechuga=ventana.getTodosLosPlatos().get("lechuga").keySet(); //obtienes todas las calorias de todos los platos de lechuga
-					Iterator it=platosLechuga.iterator();
-					while(it.hasNext()) {
-						int calorias=(int)it.next();
-						System.out.println("calorias: "+calorias);
-				}
-					Plato[] lechugaPerder = {lechugaConPavo, patataConMerluza, lechugaConQueso, lechugaConPollo};
-					ventana.setDietaUsuario(new Dieta("Perder peso con lechuga",lechugaPerder,hoy,mañana));
-				}
-				//MANTENER CON LECHUGA
-				if (rdbtnLechuga.isSelected()&& botonMantener.isSelected()) {
-					Set<Integer> platosLechuga=ventana.getTodosLosPlatos().get("lechuga").keySet(); //obtienes todas las calorias de todos los platos de lechuga
-					Iterator it=platosLechuga.iterator();
-					while(it.hasNext()) {
-						int calorias=(int)it.next();
-						System.out.println("calorias: "+calorias);
-				}
-					Plato[] lechugaMantener = {lechugaConPavo, lechugaConPollo, lechugaConQueso, lechugaConAtun};
-					ventana.setDietaUsuario(new Dieta("Mantener peso con lechuga",lechugaMantener,hoy,mañana));
-				}
-				//GANAR CON LECHUGA
-				if (rdbtnLechuga.isSelected()&& botonGanar.isSelected()) {
-					Set<Integer> platosLechuga=ventana.getTodosLosPlatos().get("lechuga").keySet(); //obtienes todas las calorias de todos los platos de lechuga
-					Iterator it=platosLechuga.iterator();
-					while(it.hasNext()) {
-						int calorias=(int)it.next();
-						System.out.println("calorias: "+calorias);
-				}
-					Plato[] lechugaGanar = {lechugaConTernera, lechugaConPollo, lechugaConSolomillo, lechugaConAtun};
-					ventana.setDietaUsuario(new Dieta("Ganar peso con lechuga",lechugaGanar,hoy,mañana));
-				}
-				//ventana.setDietaUsuario(new Dieta(...));
-			
-				ventana.irATuDieta();
-			}
-		});
-		botonCrearDieta.setText("Crear Dieta");
-		botonCrearDieta.setBounds(336, 377, 142, 42);
-		add(botonCrearDieta);
 		
 		JLabel lblNombreDeTu = new JLabel("NOMBRE DE TU DIETA:");
 		lblNombreDeTu.setForeground(Color.WHITE);
@@ -591,18 +433,17 @@ public class DiseñaDieta extends JPanel{
 		
 		JLabel lblFechaDeInicio = new JLabel("FECHA DE INICIO:");
 		lblFechaDeInicio.setForeground(Color.WHITE);
-		lblFechaDeInicio.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblFechaDeInicio.setBounds(21, 373, 142, 14);
+		lblFechaDeInicio.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblFechaDeInicio.setBounds(21, 373, 141, 14);
 		add(lblFechaDeInicio);
 		
-		JLabel lblFecha = new JLabel("FECHA FIN :");
+		JLabel lblFecha = new JLabel("FECHA FIN (dd/MM/yyyy):");
 		lblFecha.setForeground(Color.WHITE);
-		lblFecha.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblFecha.setFont(new Font("Tahoma", Font.BOLD, 10));
 		lblFecha.setBounds(20, 405, 142, 14);
 		add(lblFecha);
 		
 		fechaIInicio = new JTextField();
-		fechaIInicio.setText("");
 		fechaIInicio.setBounds(173, 372, 128, 20);
 		add(fechaIInicio);
 		fechaIInicio.setColumns(10);
@@ -612,6 +453,643 @@ public class DiseñaDieta extends JPanel{
 		add(fechaFin);
 		fechaFin.setColumns(10);
 		
+		
+		BotonMenu botonAtras = new BotonMenu("Atrás");
+		botonAtras.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ventana.irAEligeLoginRegistro();
+			}
+		});
+		
+		botonAtras.setBounds(376, 430, 89, 23);
+		add(botonAtras);
+		
+		
+		BotonMenu botonCrearDieta = new BotonMenu("Crear Dieta");
+		botonCrearDieta.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				
+				String nombre_dieta;
+				String desayuno;
+				String almuerzo;
+				String merienda;
+				String cena;
+				String f_inicio =fechaIInicio.getText();
+				String f_fin = fechaFin.getText();
+				//LocalDate hoy = LocalDate.now();
+				//LocalDate mañana = LocalDate.now();
+				LocalDate inicio = LocalDate.parse(f_inicio, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+				LocalDate fin = LocalDate.parse(f_fin, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+				
+				//PASTA & PERDER PESO
+				if(rdbtnPasta.isSelected() && botonPerder.isSelected()) {
+					Set<Integer> platosPasta=ventana.getTodosLosPlatos().get("pasta").keySet(); //obtienes todas las calorias de todos los platos de pasta
+					Iterator it=platosPasta.iterator();
+					while(it.hasNext()) {
+						int calorias=(int)it.next();
+						System.out.println("calorias: "+calorias);
+				}
+										
+					Plato[] pastaAdelgaza = {pastaConTomate, pastaConEspinaca, pastaConBesugo, pastaConMerluza};
+					
+					
+					nombre_dieta = nombreDieta.getText();
+					desayuno = pastaAdelgaza[0].getNombre();
+					almuerzo = pastaAdelgaza[1].getNombre();
+					merienda = pastaAdelgaza[2].getNombre();
+					cena = pastaAdelgaza[3].getNombre();
+					f_inicio = fechaIInicio.getText();
+					f_fin = fechaFin.getText();
+					inicio = LocalDate.parse(f_inicio, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+				    fin = LocalDate.parse(f_fin, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+					
+					try {
+						ventana.setDietaUsuario(new Dieta("Adelgazar con pasta",pastaAdelgaza,f_inicio,f_fin));
+						ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.56.1:3306/programanutricion","dietista","dietista"));
+						//usamos
+						PreparedStatement smt =
+						ventana.getCon().prepareStatement("insert into dieta values(?,?,?,?,?,'"+inicio+"','"+fin+"',?)");
+						
+						//'inicio' y 'fin' lo inserto directamente en prepareStatement para que no me de problemas por ser LocalDAte 
+						
+						smt.setString(1, nombre_dieta);
+						smt.setString(2, desayuno);
+						smt.setString(3, almuerzo);
+						smt.setString(4, merienda);
+						smt.setString(5, cena);
+						smt.setString(6, ventana.getUsuario().getNombre());
+						
+						
+						
+						smt.executeUpdate();
+						ventana.getCon().close();
+						ventana.irACalculacalorias();
+						
+	                } catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}catch(FechaException e4) {
+						JOptionPane.showMessageDialog(ventana, "La fecha es incorrecta, usa formato dd/mm/yyyy", "Fecha incorrecta", JOptionPane.ERROR_MESSAGE);
+						//e4.printStackTrace();
+					}
+				}
+				//PASTA & MANTENER PESO
+				if(rdbtnPasta.isSelected() && botonMantener.isSelected()) {
+					Set<Integer> platosPasta=ventana.getTodosLosPlatos().get("pasta").keySet(); //obtienes todas las calorias de todos los platos de pasta
+					Iterator it=platosPasta.iterator();
+					while(it.hasNext()) {
+						int calorias=(int)it.next();
+						System.out.println("calorias: "+calorias);
+				}
+										
+					Plato[] pastaMantiene = {pastaConTomate, pastaConPollo, pastaConBesugo, pastaConPollo};
+					nombre_dieta = nombreDieta.getText();
+					desayuno = pastaMantiene[0].getNombre();
+					almuerzo = pastaMantiene[1].getNombre();
+					merienda = pastaMantiene[2].getNombre();
+					cena = pastaMantiene[3].getNombre();
+					f_inicio = fechaIInicio.getText();
+					f_fin = fechaFin.getText();
+					inicio = LocalDate.parse(f_inicio, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+				    fin = LocalDate.parse(f_fin, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+					
+					try {
+						ventana.setDietaUsuario(new Dieta("Mantener con pasta",pastaMantiene,f_inicio,f_fin));
+						ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.56.1:3306/programanutricion","dietista","dietista"));
+						//usamos
+						PreparedStatement smt =
+						ventana.getCon().prepareStatement("insert into dieta values(?,?,?,?,?,'"+inicio+"','"+fin+"',?)");
+						
+						//'inicio' y 'fin' lo inserto directamente en prepareStatement para que no me de problemas por ser LocalDAte 
+						
+						smt.setString(1, nombre_dieta);
+						smt.setString(2, desayuno);
+						smt.setString(3, almuerzo);
+						smt.setString(4, merienda);
+						smt.setString(5, cena);
+						smt.setString(6, ventana.getUsuario().getNombre());
+						
+						
+						
+						smt.executeUpdate();
+						ventana.getCon().close();
+						ventana.irACalculacalorias();
+						
+	                } catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}catch(FechaException e4) {
+						JOptionPane.showMessageDialog(ventana, "La fecha es incorrecta, usa formato dd/mm/yyyy", "Fecha incorrecta", JOptionPane.ERROR_MESSAGE);
+						//e4.printStackTrace();
+					}
+					
+				}
+				//PASTA & GANAR PESO
+				if(rdbtnPasta.isSelected() && botonGanar.isSelected()) {
+					Set<Integer> platosPasta=ventana.getTodosLosPlatos().get("pasta").keySet(); //obtienes todas las calorias de todos los platos de pasta
+					Iterator it=platosPasta.iterator();
+					while(it.hasNext()) {
+						int calorias=(int)it.next();
+						System.out.println("calorias: "+calorias);
+				}
+										
+					Plato[] pastaGana = {pastaConGarbanzos, pastaConPollo, pastaConAtun, pastaConTernera};
+					nombre_dieta = nombreDieta.getText();
+					desayuno = pastaGana[0].getNombre();
+					almuerzo = pastaGana[1].getNombre();
+					merienda = pastaGana[2].getNombre();
+					cena = pastaGana[3].getNombre();
+					f_inicio = fechaIInicio.getText();
+					f_fin = fechaFin.getText();
+					inicio = LocalDate.parse(f_inicio, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+				    fin = LocalDate.parse(f_fin, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+					
+					try {
+						ventana.setDietaUsuario(new Dieta("Gana con pasta",pastaGana,f_inicio,f_fin));
+						ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.56.1:3306/programanutricion","dietista","dietista"));
+						//usamos
+						PreparedStatement smt =
+						ventana.getCon().prepareStatement("insert into dieta values(?,?,?,?,?,'"+inicio+"','"+fin+"',?)");
+						
+						//'inicio' y 'fin' lo inserto directamente en prepareStatement para que no me de problemas por ser LocalDAte 
+						
+						smt.setString(1, nombre_dieta);
+						smt.setString(2, desayuno);
+						smt.setString(3, almuerzo);
+						smt.setString(4, merienda);
+						smt.setString(5, cena);
+						smt.setString(6, ventana.getUsuario().getNombre());
+						
+						
+						
+						smt.executeUpdate();
+						ventana.getCon().close();
+						ventana.irACalculacalorias();
+						
+	                } catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}catch(FechaException e4) {
+						JOptionPane.showMessageDialog(ventana, "La fecha es incorrecta, usa formato dd/mm/yyyy", "Fecha incorrecta", JOptionPane.ERROR_MESSAGE);
+						//e4.printStackTrace();
+					}
+					
+				}
+				//PERDER CON ARROZ
+				if(rdbtnArroz.isSelected()&& botonPerder.isSelected()){
+					Set<Integer> platosArroz=ventana.getTodosLosPlatos().get("arroz").keySet(); //obtienes todas las calorias de todos los platos de arroz
+					Iterator it=platosArroz.iterator();
+					while(it.hasNext()) {
+						int calorias=(int)it.next();
+						System.out.println("calorias: "+calorias);
+				}
+					Plato[] arrozAdelgaza = {arrozConEspinacas, arrozConMerluza, arrozConCalabaza, arrozConPavo};
+					nombre_dieta = nombreDieta.getText();
+					desayuno = arrozAdelgaza[0].getNombre();
+					almuerzo = arrozAdelgaza[1].getNombre();
+					merienda = arrozAdelgaza[2].getNombre();
+					cena = arrozAdelgaza[3].getNombre();
+					f_inicio = fechaIInicio.getText();
+					f_fin = fechaFin.getText();
+					inicio = LocalDate.parse(f_inicio, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+				    fin = LocalDate.parse(f_fin, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+					
+					try {
+						ventana.setDietaUsuario(new Dieta("Adelgaza con arroz",arrozAdelgaza,f_inicio,f_fin));
+						ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.56.1:3306/programanutricion","dietista","dietista"));
+						//usamos
+						PreparedStatement smt =
+						ventana.getCon().prepareStatement("insert into dieta values(?,?,?,?,?,'"+inicio+"','"+fin+"',?)");
+						
+						//'inicio' y 'fin' lo inserto directamente en prepareStatement para que no me de problemas por ser LocalDAte 
+						
+						smt.setString(1, nombre_dieta);
+						smt.setString(2, desayuno);
+						smt.setString(3, almuerzo);
+						smt.setString(4, merienda);
+						smt.setString(5, cena);
+						smt.setString(6, ventana.getUsuario().getNombre());
+						
+						
+						
+						smt.executeUpdate();
+						ventana.getCon().close();
+						ventana.irACalculacalorias();
+						
+	                } catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}catch(FechaException e4) {
+						JOptionPane.showMessageDialog(ventana, "La fecha es incorrecta, usa formato dd/mm/yyyy", "Fecha incorrecta", JOptionPane.ERROR_MESSAGE);
+						//e4.printStackTrace();
+					}
+				}
+				//MANTENER CON ARROZ
+				if(rdbtnArroz.isSelected()&& botonMantener.isSelected()){
+					Set<Integer> platosArroz=ventana.getTodosLosPlatos().get("arroz").keySet(); //obtienes todas las calorias de todos los platos de arroz
+					Iterator it=platosArroz.iterator();
+					while(it.hasNext()) {
+						int calorias=(int)it.next();
+						System.out.println("calorias: "+calorias);
+				}
+					Plato[] arrozMantener = {arrozConGamba, arrozConPollo, arrozConCalabaza, arrozConPavo};
+					nombre_dieta = nombreDieta.getText();
+					desayuno = arrozMantener[0].getNombre();
+					almuerzo = arrozMantener[1].getNombre();
+					merienda = arrozMantener[2].getNombre();
+					cena = arrozMantener[3].getNombre();
+					f_inicio = fechaIInicio.getText();
+					f_fin = fechaFin.getText();
+					inicio = LocalDate.parse(f_inicio, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+				    fin = LocalDate.parse(f_fin, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+					
+					try {
+						ventana.setDietaUsuario(new Dieta("Mantiene con arroz",arrozMantener,f_inicio,f_fin));
+						ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.56.1:3306/programanutricion","dietista","dietista"));
+						//usamos
+						PreparedStatement smt =
+						ventana.getCon().prepareStatement("insert into dieta values(?,?,?,?,?,'"+inicio+"','"+fin+"',?)");
+						
+						//'inicio' y 'fin' lo inserto directamente en prepareStatement para que no me de problemas por ser LocalDAte 
+						
+						smt.setString(1, nombre_dieta);
+						smt.setString(2, desayuno);
+						smt.setString(3, almuerzo);
+						smt.setString(4, merienda);
+						smt.setString(5, cena);
+						smt.setString(6, ventana.getUsuario().getNombre());
+						
+						
+						
+						smt.executeUpdate();
+						ventana.getCon().close();
+						ventana.irACalculacalorias();
+						
+	                } catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}catch(FechaException e4) {
+						JOptionPane.showMessageDialog(ventana, "La fecha es incorrecta, usa formato dd/mm/yyyy", "Fecha incorrecta", JOptionPane.ERROR_MESSAGE);
+						//e4.printStackTrace();
+					}
+					
+				}
+				//GANAR CON ARROZ
+				if(rdbtnArroz.isSelected()&& botonGanar.isSelected()){
+					Set<Integer> platosArroz=ventana.getTodosLosPlatos().get("arroz").keySet(); //obtienes todas las calorias de todos los platos de arroz
+					Iterator it=platosArroz.iterator();
+					while(it.hasNext()) {
+						int calorias=(int)it.next();
+						System.out.println("calorias: "+calorias);
+				}
+					Plato[] arrozGanar = {arrozConGamba, arrozConPollo, arrozConAtun, arrozConTernera};
+					nombre_dieta = nombreDieta.getText();
+					desayuno = arrozGanar[0].getNombre();
+					almuerzo = arrozGanar[1].getNombre();
+					merienda = arrozGanar[2].getNombre();
+					cena = arrozGanar[3].getNombre();
+					f_inicio = fechaIInicio.getText();
+					f_fin = fechaFin.getText();
+					inicio = LocalDate.parse(f_inicio, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+				    fin = LocalDate.parse(f_fin, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+					
+					try {
+						ventana.setDietaUsuario(new Dieta("Gana con arroz",arrozGanar,f_inicio,f_fin));
+						ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.56.1:3306/programanutricion","dietista","dietista"));
+						//usamos
+						PreparedStatement smt =
+						ventana.getCon().prepareStatement("insert into dieta values(?,?,?,?,?,'"+inicio+"','"+fin+"',?)");
+						
+						//'inicio' y 'fin' lo inserto directamente en prepareStatement para que no me de problemas por ser LocalDAte 
+						
+						smt.setString(1, nombre_dieta);
+						smt.setString(2, desayuno);
+						smt.setString(3, almuerzo);
+						smt.setString(4, merienda);
+						smt.setString(5, cena);
+						smt.setString(6, ventana.getUsuario().getNombre());
+						
+						
+						
+						smt.executeUpdate();
+						ventana.getCon().close();
+						ventana.irACalculacalorias();
+						
+	                } catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}catch(FechaException e4) {
+						JOptionPane.showMessageDialog(ventana, "La fecha es incorrecta, usa formato dd/mm/yyyy", "Fecha incorrecta", JOptionPane.ERROR_MESSAGE);
+						//e4.printStackTrace();
+					}
+					
+				}
+				//PERDER CON PATATA
+				if (rdbtnPatata.isSelected()&& botonPerder.isSelected()) {
+					Set<Integer> platosPatata=ventana.getTodosLosPlatos().get("patata").keySet(); //obtienes todas las calorias de todos los platos de patata
+					Iterator it=platosPatata.iterator();
+					while(it.hasNext()) {
+						int calorias=(int)it.next();
+						System.out.println("calorias: "+calorias);
+				}
+					Plato[] patataPerder = {patataConEspinaca, patataConMerluza, patataConBrocoli, patataConPavo};
+					nombre_dieta = nombreDieta.getText();
+					desayuno = patataPerder[0].getNombre();
+					almuerzo = patataPerder[1].getNombre();
+					merienda = patataPerder[2].getNombre();
+					cena = patataPerder[3].getNombre();
+					f_inicio = fechaIInicio.getText();
+					f_fin = fechaFin.getText();
+					inicio = LocalDate.parse(f_inicio, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+				    fin = LocalDate.parse(f_fin, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+					
+					try {
+						ventana.setDietaUsuario(new Dieta("Gana con patata",patataPerder,f_inicio,f_fin));
+						ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.56.1:3306/programanutricion","dietista","dietista"));
+						//usamos
+						PreparedStatement smt =
+						ventana.getCon().prepareStatement("insert into dieta values(?,?,?,?,?,'"+inicio+"','"+fin+"',?)");
+						
+						//'inicio' y 'fin' lo inserto directamente en prepareStatement para que no me de problemas por ser LocalDAte 
+						
+						smt.setString(1, nombre_dieta);
+						smt.setString(2, desayuno);
+						smt.setString(3, almuerzo);
+						smt.setString(4, merienda);
+						smt.setString(5, cena);
+						smt.setString(6, ventana.getUsuario().getNombre());
+						
+						
+						
+						smt.executeUpdate();
+						ventana.getCon().close();
+						ventana.irACalculacalorias();
+						
+	                } catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}catch(FechaException e4) {
+						JOptionPane.showMessageDialog(ventana, "La fecha es incorrecta, usa formato dd/mm/yyyy", "Fecha incorrecta", JOptionPane.ERROR_MESSAGE);
+						//e4.printStackTrace();
+					}
+				}
+				//MANTENER CON PATATA
+				if (rdbtnPatata.isSelected()&& botonMantener.isSelected()) {
+					Set<Integer> platosPatata=ventana.getTodosLosPlatos().get("patata").keySet(); //obtienes todas las calorias de todos los platos de patata
+					Iterator it=platosPatata.iterator();
+					while(it.hasNext()) {
+						int calorias=(int)it.next();
+						System.out.println("calorias: "+calorias);
+				}
+					Plato[] patataMantener = {patataConPavo, patataConMerluza, patataConLenguado, patataConPollo};
+					nombre_dieta = nombreDieta.getText();
+					desayuno = patataMantener[0].getNombre();
+					almuerzo = patataMantener[1].getNombre();
+					merienda = patataMantener[2].getNombre();
+					cena = patataMantener[3].getNombre();
+					f_inicio = fechaIInicio.getText();
+					f_fin = fechaFin.getText();
+					inicio = LocalDate.parse(f_inicio, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+				    fin = LocalDate.parse(f_fin, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+					
+					try {
+						ventana.setDietaUsuario(new Dieta("Mantiene con patata",patataMantener,f_inicio,f_fin));
+						ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.56.1:3306/programanutricion","dietista","dietista"));
+						//usamos
+						PreparedStatement smt =
+						ventana.getCon().prepareStatement("insert into dieta values(?,?,?,?,?,'"+inicio+"','"+fin+"',?)");
+						
+						//'inicio' y 'fin' lo inserto directamente en prepareStatement para que no me de problemas por ser LocalDAte 
+						
+						smt.setString(1, nombre_dieta);
+						smt.setString(2, desayuno);
+						smt.setString(3, almuerzo);
+						smt.setString(4, merienda);
+						smt.setString(5, cena);
+						smt.setString(6, ventana.getUsuario().getNombre());
+						
+						
+						
+						smt.executeUpdate();
+						ventana.getCon().close();
+						ventana.irACalculacalorias();
+						
+	                } catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}catch(FechaException e4) {
+						JOptionPane.showMessageDialog(ventana, "La fecha es incorrecta, usa formato dd/mm/yyyy", "Fecha incorrecta", JOptionPane.ERROR_MESSAGE);
+						//e4.printStackTrace();
+					}
+				}
+				//GANAR CON PATATA
+				if (rdbtnPatata.isSelected()&& botonGanar.isSelected()) {
+					Set<Integer> platosPatata=ventana.getTodosLosPlatos().get("patata").keySet(); //obtienes todas las calorias de todos los platos de patata
+					Iterator it=platosPatata.iterator();
+					while(it.hasNext()) {
+						int calorias=(int)it.next();
+						System.out.println("calorias: "+calorias);
+				}
+					Plato[] patataGanar = {patataConPavo, patataConTernera, patataConGarbanzos, patataConPollo};
+					nombre_dieta = nombreDieta.getText();
+					desayuno = patataGanar[0].getNombre();
+					almuerzo = patataGanar[1].getNombre();
+					merienda = patataGanar[2].getNombre();
+					cena = patataGanar[3].getNombre();
+					f_inicio = fechaIInicio.getText();
+					f_fin = fechaFin.getText();
+					inicio = LocalDate.parse(f_inicio, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+				    fin = LocalDate.parse(f_fin, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+					
+					try {
+						ventana.setDietaUsuario(new Dieta("Gana con patata",patataGanar,f_inicio,f_fin));
+						ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.56.1:3306/programanutricion","dietista","dietista"));
+						//usamos
+						PreparedStatement smt =
+						ventana.getCon().prepareStatement("insert into dieta values(?,?,?,?,?,'"+inicio+"','"+fin+"',?)");
+						
+						//'inicio' y 'fin' lo inserto directamente en prepareStatement para que no me de problemas por ser LocalDAte 
+						
+						smt.setString(1, nombre_dieta);
+						smt.setString(2, desayuno);
+						smt.setString(3, almuerzo);
+						smt.setString(4, merienda);
+						smt.setString(5, cena);
+						smt.setString(6, ventana.getUsuario().getNombre());
+						
+						
+						
+						smt.executeUpdate();
+						ventana.getCon().close();
+						ventana.irACalculacalorias();
+						
+	                } catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}catch(FechaException e4) {
+						JOptionPane.showMessageDialog(ventana, "La fecha es incorrecta, usa formato dd/mm/yyyy", "Fecha incorrecta", JOptionPane.ERROR_MESSAGE);
+						//e4.printStackTrace();
+					}
+				}
+				//PERDER CON LECHUGA
+				if (rdbtnLechuga.isSelected()&& botonPerder.isSelected()) {
+					Set<Integer> platosLechuga=ventana.getTodosLosPlatos().get("lechuga").keySet(); //obtienes todas las calorias de todos los platos de lechuga
+					Iterator it=platosLechuga.iterator();
+					while(it.hasNext()) {
+						int calorias=(int)it.next();
+						System.out.println("calorias: "+calorias);
+				}
+					Plato[] lechugaPerder = {lechugaConPavo, patataConMerluza, lechugaConQueso, lechugaConPollo};
+					nombre_dieta = nombreDieta.getText();
+					desayuno = lechugaPerder[0].getNombre();
+					almuerzo = lechugaPerder[1].getNombre();
+					merienda = lechugaPerder[2].getNombre();
+					cena = lechugaPerder[3].getNombre();
+					f_inicio = fechaIInicio.getText();
+					f_fin = fechaFin.getText();
+					inicio = LocalDate.parse(f_inicio, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+				    fin = LocalDate.parse(f_fin, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+					
+					try {
+						ventana.setDietaUsuario(new Dieta("Pierde con lechuga",lechugaPerder,f_inicio,f_fin));
+						ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.56.1:3306/programanutricion","dietista","dietista"));
+						//usamos
+						PreparedStatement smt =
+						ventana.getCon().prepareStatement("insert into dieta values(?,?,?,?,?,'"+inicio+"','"+fin+"',?)");
+						
+						//'inicio' y 'fin' lo inserto directamente en prepareStatement para que no me de problemas por ser LocalDAte 
+						
+						smt.setString(1, nombre_dieta);
+						smt.setString(2, desayuno);
+						smt.setString(3, almuerzo);
+						smt.setString(4, merienda);
+						smt.setString(5, cena);
+						smt.setString(6, ventana.getUsuario().getNombre());
+						
+						
+						
+						smt.executeUpdate();
+						ventana.getCon().close();
+						ventana.irACalculacalorias();
+						
+	                } catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}catch(FechaException e4) {
+						JOptionPane.showMessageDialog(ventana, "La fecha es incorrecta, usa formato dd/mm/yyyy", "Fecha incorrecta", JOptionPane.ERROR_MESSAGE);
+						//e4.printStackTrace();
+					}
+				}
+				//MANTENER CON LECHUGA
+				if (rdbtnLechuga.isSelected()&& botonMantener.isSelected()) {
+					Set<Integer> platosLechuga=ventana.getTodosLosPlatos().get("lechuga").keySet(); //obtienes todas las calorias de todos los platos de lechuga
+					Iterator it=platosLechuga.iterator();
+					while(it.hasNext()) {
+						int calorias=(int)it.next();
+						System.out.println("calorias: "+calorias);
+				}
+					Plato[] lechugaMantener = {lechugaConPavo, lechugaConPollo, lechugaConQueso, lechugaConAtun};
+					nombre_dieta = nombreDieta.getText();
+					desayuno = lechugaMantener[0].getNombre();
+					almuerzo = lechugaMantener[1].getNombre();
+					merienda = lechugaMantener[2].getNombre();
+					cena = lechugaMantener[3].getNombre();
+					f_inicio = fechaIInicio.getText();
+					f_fin = fechaFin.getText();
+					
+					try {
+						ventana.setDietaUsuario(new Dieta("Mantiene con lechuga",lechugaMantener,f_inicio,f_fin));
+						ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.56.1:3306/programanutricion","dietista","dietista"));
+						//usamos
+						PreparedStatement smt =
+						ventana.getCon().prepareStatement("insert into dieta values(?,?,?,?,?,'"+inicio+"','"+fin+"',?)");
+						
+						//'inicio' y 'fin' lo inserto directamente en prepareStatement para que no me de problemas por ser LocalDAte 
+						
+						smt.setString(1, nombre_dieta);
+						smt.setString(2, desayuno);
+						smt.setString(3, almuerzo);
+						smt.setString(4, merienda);
+						smt.setString(5, cena);
+						smt.setString(6, ventana.getUsuario().getNombre());
+						
+						
+						
+						smt.executeUpdate();
+						ventana.getCon().close();
+						ventana.irACalculacalorias();
+						
+	                } catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}catch(DateTimeParseException e4) {
+						JOptionPane.showMessageDialog(ventana, "La fecha es incorrecta, usa formato dd/mm/yyyy", "Fecha incorrecta", JOptionPane.ERROR_MESSAGE);
+						//e4.printStackTrace();
+					} catch (FechaException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				//GANAR CON LECHUGA
+				if (rdbtnLechuga.isSelected()&& botonGanar.isSelected()) {
+					Set<Integer> platosLechuga=ventana.getTodosLosPlatos().get("lechuga").keySet(); //obtienes todas las calorias de todos los platos de lechuga
+					Iterator it=platosLechuga.iterator();
+					while(it.hasNext()) {
+						int calorias=(int)it.next();
+						System.out.println("calorias: "+calorias);
+				}
+					Plato[] lechugaGanar = {lechugaConTernera, lechugaConPollo, lechugaConSolomillo, lechugaConAtun};
+					nombre_dieta = nombreDieta.getText();
+					desayuno = lechugaGanar[0].getNombre();
+					almuerzo = lechugaGanar[1].getNombre();
+					merienda = lechugaGanar[2].getNombre();
+					cena = lechugaGanar[3].getNombre();
+					f_inicio = fechaIInicio.getText();
+					f_fin = fechaFin.getText();
+					inicio = LocalDate.parse(f_inicio, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+				    fin = LocalDate.parse(f_fin, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+					
+					try {
+						ventana.setDietaUsuario(new Dieta("Gana con lechuga",lechugaGanar,f_inicio,f_fin));
+						ventana.setCon(DriverManager.getConnection("jdbc:mysql://192.168.56.1:3306/programanutricion","dietista","dietista"));
+						//usamos
+						PreparedStatement smt =
+						ventana.getCon().prepareStatement("insert into dieta values(?,?,?,?,?,'"+inicio+"','"+fin+"',?)");
+						
+						//'inicio' y 'fin' lo inserto directamente en prepareStatement para que no me de problemas por ser LocalDAte 
+						
+						smt.setString(1, nombre_dieta);
+						smt.setString(2, desayuno);
+						smt.setString(3, almuerzo);
+						smt.setString(4, merienda);
+						smt.setString(5, cena);
+						smt.setString(6, ventana.getUsuario().getNombre());
+						
+						
+						
+						smt.executeUpdate();
+						ventana.getCon().close();
+						ventana.irACalculacalorias();
+						
+	                } catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}catch(FechaException e4) {
+						JOptionPane.showMessageDialog(ventana, "La fecha es incorrecta, usa formato dd/mm/yyyy", "Fecha incorrecta", JOptionPane.ERROR_MESSAGE);
+						//e4.printStackTrace();
+					}
+				}
+				
+			
+				ventana.irATuDieta();
+			}
+		});
+		botonCrearDieta.setText("Crear Dieta");
+		botonCrearDieta.setBounds(336, 377, 142, 42);
+		add(botonCrearDieta);
 		
 		setVisible(true);
 	}
